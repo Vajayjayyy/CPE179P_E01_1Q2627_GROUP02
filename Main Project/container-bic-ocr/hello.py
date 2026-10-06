@@ -1,0 +1,1 @@
+print("Hello! Container BIC OCR project is working.")
