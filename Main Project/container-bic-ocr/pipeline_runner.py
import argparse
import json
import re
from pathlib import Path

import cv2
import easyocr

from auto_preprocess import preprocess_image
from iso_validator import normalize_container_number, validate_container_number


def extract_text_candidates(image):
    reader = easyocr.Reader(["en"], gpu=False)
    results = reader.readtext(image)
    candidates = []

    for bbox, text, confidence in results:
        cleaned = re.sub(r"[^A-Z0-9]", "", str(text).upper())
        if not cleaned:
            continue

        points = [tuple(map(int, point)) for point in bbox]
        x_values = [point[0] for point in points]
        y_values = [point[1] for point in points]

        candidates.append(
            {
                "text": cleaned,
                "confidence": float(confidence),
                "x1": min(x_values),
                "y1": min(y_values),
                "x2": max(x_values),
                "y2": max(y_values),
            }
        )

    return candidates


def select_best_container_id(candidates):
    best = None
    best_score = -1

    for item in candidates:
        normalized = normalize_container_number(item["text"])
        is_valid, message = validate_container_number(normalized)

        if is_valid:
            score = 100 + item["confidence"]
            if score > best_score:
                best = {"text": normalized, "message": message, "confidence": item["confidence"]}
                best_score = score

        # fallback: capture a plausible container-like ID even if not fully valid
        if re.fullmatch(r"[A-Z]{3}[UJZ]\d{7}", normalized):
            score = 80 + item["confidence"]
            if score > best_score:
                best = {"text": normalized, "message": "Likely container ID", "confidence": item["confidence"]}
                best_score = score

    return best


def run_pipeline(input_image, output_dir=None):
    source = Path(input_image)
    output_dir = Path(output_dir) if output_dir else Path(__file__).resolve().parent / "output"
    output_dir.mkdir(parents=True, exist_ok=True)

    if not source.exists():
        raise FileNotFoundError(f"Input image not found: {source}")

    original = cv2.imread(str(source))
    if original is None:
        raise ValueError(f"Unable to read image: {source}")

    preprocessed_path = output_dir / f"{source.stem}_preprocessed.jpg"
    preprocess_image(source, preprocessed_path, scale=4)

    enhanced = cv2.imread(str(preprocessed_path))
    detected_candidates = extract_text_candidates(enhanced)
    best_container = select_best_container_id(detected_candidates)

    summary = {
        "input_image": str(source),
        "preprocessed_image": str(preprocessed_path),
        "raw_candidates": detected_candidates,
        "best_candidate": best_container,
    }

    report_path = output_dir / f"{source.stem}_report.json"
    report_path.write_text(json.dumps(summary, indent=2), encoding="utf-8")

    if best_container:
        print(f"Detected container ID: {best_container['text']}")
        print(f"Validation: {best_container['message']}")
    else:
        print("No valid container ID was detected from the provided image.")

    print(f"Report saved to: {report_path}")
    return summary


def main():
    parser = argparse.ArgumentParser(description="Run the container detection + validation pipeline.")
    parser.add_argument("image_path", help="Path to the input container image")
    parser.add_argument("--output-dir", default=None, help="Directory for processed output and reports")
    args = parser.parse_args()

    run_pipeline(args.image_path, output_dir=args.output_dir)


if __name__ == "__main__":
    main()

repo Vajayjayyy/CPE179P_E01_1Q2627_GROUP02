@@ -1,0 +1,40 @@
+import argparse
+from pathlib import Path
+
+from auto_preprocess import preprocess_image
+
+
+def batch_preprocess(input_dir, output_dir, scale=4, file_extension="*.jpg"):
+    input_path = Path(input_dir)
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    files = sorted(input_path.glob(file_extension))
+    if not files:
+        print(f"No files found in {input_dir} matching {file_extension}")
+        return []
+
+    processed = []
+    for image_file in files:
+        destination = output_path / f"{image_file.stem}_enhanced{image_file.suffix}"
+        preprocess_image(image_file, destination, scale=scale)
+        processed.append(destination)
+        print(f"Processed: {image_file.name} -> {destination}")
+
+    return processed
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Run preprocessing on a batch of images.")
+    parser.add_argument("input_dir", help="Directory containing input images")
+    parser.add_argument("output_dir", help="Directory to store processed images")
+    parser.add_argument("--scale", type=int, default=4, help="Upscale factor")
+    parser.add_argument("--ext", default="*.jpg", help="File extension pattern")
+    args = parser.parse_args()
+
+    processed = batch_preprocess(args.input_dir, args.output_dir, scale=args.scale, file_extension=args.ext)
+    print(f"Completed: {len(processed)} file(s) processed.")
+
+
+if __name__ == "__main__":
+    main()

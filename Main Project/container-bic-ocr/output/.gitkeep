@@ -1,0 +1,91 @@
+# Edge-Optimized Container Identification for Automated Port Logistics
+
+This repository contains the project work for container identification using computer vision and OCR. The system focuses on reading container IDs from images, validating them against ISO 6346 rules, and preparing the pipeline for automated port logistics use.
+
+## Project structure
+
+- `Dataset/` – exported dataset used for training and validation
+- `Main Project/container-bic-ocr/` – OCR, detection, preprocessing, and validation scripts
+- `Source Codes/Requirements.txt` – Python dependencies for the project
+
+## Active sprint documentation
+
+- [Sprint 1](./SPRINT_1.md)
+- [Sprint 2](./SPRINT_2.md)
+
+## Project goals
+
+- Build a repeatable image preprocessing pipeline
+- Detect container IDs from images
+- Use OCR to read container numbers
+- Validate IDs using the ISO 6346 check-digit rule
+- Run the workflow efficiently for batch processing
+- Produce a demo-ready and well-documented project
+
+## Primary workflow for this sprint
+
+Use the project scripts in this order:
+
+1. preprocess a crop or image
+2. detect text with OCR
+3. clean the extracted text
+4. validate against ISO 6346
+5. save results and metrics
+
+## Run the validation checker
+
+```bash
+python "Main Project/container-bic-ocr/iso_validator.py" DAYU6721743
+```
+
+## Run image preprocessing
+
+```bash
+python "Main Project/container-bic-ocr/auto_preprocess.py" "path/to/input.jpg" "path/to/output.jpg"
+```
+
+## Run batch preprocessing
+
+```bash
+python "Main Project/container-bic-ocr/batch_preprocess.py" "path/to/input_dir" "path/to/output_dir" --ext "*.jpg"
+```
+
+## Run the end-to-end pipeline
+
+```bash
+python "Main Project/container-bic-ocr/pipeline_runner.py" "path/to/container_image.jpg" --output-dir "Main Project/container-bic-ocr/output"
+```
+
+## Technical notes
+
+The repository currently includes scripts such as:
+
+- `auto_detect.py`
+- `auto_detect_v2.py`
+- `auto_preprocess.py`
+- `batch_detection_230.py`
+- `batch_preprocess.py`
+- `iso_validator.py`
+- `pipeline_test.py`
+- `pipeline_runner.py` (primary consolidated workflow)
+
+These scripts form the baseline for the OCR and validation pipeline. The sprint work focuses on making them more structured, reusable, and easier to validate.
+
+## Sprint plan summary
+
+### Sprint 1
+Focus: environment setup, data review, and baseline verification.
+
+See: [SPRINT_1.md](./SPRINT_1.md)
+
+### Sprint 2
+Focus: automation, robustness, evaluation, and final project packaging.
+
+See: [SPRINT_2.md](./SPRINT_2.md)
+
+## Current implementation status
+
+- Baseline OCR scripts exist and are documented.
+- Validation logic is available and testable.
+- Image preprocessing has been standardized into reusable functions.
+- A primary end-to-end pipeline runner is available for sprint work.

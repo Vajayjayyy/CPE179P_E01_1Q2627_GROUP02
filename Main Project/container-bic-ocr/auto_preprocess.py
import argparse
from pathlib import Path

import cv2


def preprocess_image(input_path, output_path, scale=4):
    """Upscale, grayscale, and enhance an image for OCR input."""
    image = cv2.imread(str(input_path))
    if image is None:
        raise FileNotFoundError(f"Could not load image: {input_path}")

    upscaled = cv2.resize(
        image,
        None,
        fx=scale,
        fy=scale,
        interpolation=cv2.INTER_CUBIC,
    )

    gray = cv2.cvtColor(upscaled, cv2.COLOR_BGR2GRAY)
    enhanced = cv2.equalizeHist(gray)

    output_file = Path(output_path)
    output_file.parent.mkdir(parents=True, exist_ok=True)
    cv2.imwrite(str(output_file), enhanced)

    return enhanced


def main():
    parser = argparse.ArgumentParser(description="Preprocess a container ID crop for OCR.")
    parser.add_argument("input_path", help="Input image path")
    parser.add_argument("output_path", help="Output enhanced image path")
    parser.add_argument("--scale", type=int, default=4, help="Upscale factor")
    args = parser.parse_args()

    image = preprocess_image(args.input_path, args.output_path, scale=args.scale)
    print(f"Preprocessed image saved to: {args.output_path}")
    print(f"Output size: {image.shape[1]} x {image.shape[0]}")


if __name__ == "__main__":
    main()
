@@ -1,0 +1,84 @@
+import argparse
+import re
+
+
+# ISO 6346 character values
+CHAR_MAP = {
+    "A": 10, "B": 12, "C": 13, "D": 14, "E": 15,
+    "F": 16, "G": 17, "H": 18, "I": 19, "J": 20,
+    "K": 21, "L": 23, "M": 24, "N": 25, "O": 26,
+    "P": 27, "Q": 28, "R": 29, "S": 30, "T": 31,
+    "U": 32, "V": 34, "W": 35, "X": 36, "Y": 37,
+    "Z": 38
+}
+
+
+def normalize_container_number(container_number: str) -> str:
+    if container_number is None:
+        return ""
+    cleaned = re.sub(r"[^A-Za-z0-9]", "", str(container_number)).upper()
+    return cleaned
+
+
+def calculate_check_digit(container_number):
+    """Calculate the ISO 6346 check digit."""
+    normalized = normalize_container_number(container_number)
+    if len(normalized) < 10:
+        raise ValueError("Container number is too short for ISO 6346 validation.")
+
+    body = normalized[:10]
+    total = 0
+
+    for index, character in enumerate(body):
+        if character.isalpha():
+            value = CHAR_MAP.get(character, 0)
+        else:
+            value = int(character)
+
+        total += value * (2 ** index)
+
+    return (total % 11) % 10
+
+
+def validate_container_number(container_number):
+    """Validate an ISO 6346 container number."""
+    normalized = normalize_container_number(container_number)
+
+    pattern = r"^[A-Z]{3}[UJZ]\d{7}$"
+    if not re.fullmatch(pattern, normalized):
+        return False, "Invalid format"
+
+    calculated_digit = calculate_check_digit(normalized)
+    actual_digit = int(normalized[-1])
+
+    if calculated_digit == actual_digit:
+        return True, "Valid ISO 6346 container number"
+
+    return False, (
+        f"Invalid check digit (calculated: {calculated_digit}, actual: {actual_digit})"
+    )
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Validate ISO 6346 container numbers.")
+    parser.add_argument("container_number", nargs="?", help="Container ID to validate")
+    args = parser.parse_args()
+
+    if not args.container_number:
+        examples = ["DAYU6721743", "MSCU1234566", "ABCU1234567"]
+        print("ISO 6346 Validator")
+        print("Usage: python iso_validator.py <container_number>")
+        print("Examples:")
+        for example in examples:
+            valid, message = validate_container_number(example)
+            print(f"  {example} -> {valid} ({message})")
+        return 0
+
+    is_valid, message = validate_container_number(args.container_number)
+    print(f"Container number: {normalize_container_number(args.container_number)}")
+    print(f"Result: {message}")
+    return 0 if is_valid else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
