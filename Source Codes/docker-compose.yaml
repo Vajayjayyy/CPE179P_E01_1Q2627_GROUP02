@@ -1,0 +1,7 @@
+services:
+  container-bic-ocr:
+    build: .
+    container_name: container-bic-ocr
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
