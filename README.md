@@ -8,10 +8,6 @@ This repository contains the project work for container identification using com
 - `Main Project/container-bic-ocr/` – OCR, detection, preprocessing, and validation scripts
 - `Source Codes/Requirements.txt` – Python dependencies for the project
 
-## Active sprint documentation
-
-- [Sprint 1](./SPRINT_1.md)
-- [Sprint 2](./SPRINT_2.md)
 
 ## Project goals
 
