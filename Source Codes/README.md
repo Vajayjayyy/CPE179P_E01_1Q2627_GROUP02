@@ -2,7 +2,6 @@
 
 A web-based OCR application for reading container identification codes from images. The application uses OCR to extract text, validates container identification numbers against ISO 6346 rules, displays the results, and supports exporting results to Excel.
 
-> Adjust this description if “BIC” has a specific meaning in your project or if the implemented features differ.
 
 ## Contents
 
