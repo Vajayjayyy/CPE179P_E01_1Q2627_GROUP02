@@ -200,9 +200,27 @@ OCR accuracy depends on image quality, focus, lighting, viewing angle, and wheth
 
 ## Dataset
 
-The project includes a `data/` directory. Its exact role depends on how the code references it. A folder being present in the project does not automatically mean it is included in a Docker image; only files included by Dockerfile instructions such as `COPY` are added to the image.
+==============================
 
-If the dataset is only used for training, experimentation, or evaluation, it may not be required for normal application use. If the app reads files from it while running, copy those files into the image or mount the directory at the path expected by the code.
+This dataset was exported via [roboflow.com](https://universe.roboflow.com/aya-mahmoud/detect-vakdt/dataset/1)
+
+Roboflow is an end-to-end computer vision platform that helps you
+* collaborate with your team on computer vision projects
+* collect & organize images
+* understand unstructured image data
+* annotate, and create datasets
+* export, train, and deploy computer vision models
+* use active learning to improve your dataset over time
+
+It includes 2290 images.
+Detection are annotated in COCO format.
+
+The following pre-processing was applied to each image:
+* Auto-orientation of pixel data (with EXIF-orientation stripping)
+* Resize to 416x416 (Stretch)
+
+No image augmentation techniques were applied.
+
 
 ## Troubleshooting
 
